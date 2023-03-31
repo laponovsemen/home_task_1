@@ -43,7 +43,7 @@ app.get('/products/:productTitle', (req: Request, res: Response) => {
 
 app.delete("/testing/all-data", (req: Request, res: Response) => {
     videos = []
-    res.status(204).send("success response")
+    res.status(204).send("success response ")
     return
 })
 app.post('/hometask_01/api/videos', (req: Request, res: Response) => {
