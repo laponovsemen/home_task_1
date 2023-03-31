@@ -7,7 +7,7 @@ const port = 3001
 
 app.use(express.json())
 
-app.use('/hometask_01', router)
+app.use('/', router)
 
 const startApp = () => {
     app.listen(port, () => {
