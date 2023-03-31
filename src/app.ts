@@ -16,8 +16,9 @@ app.get('/', (req: Request, res: Response) => {
 app.delete("/testing/all-data", (req: Request, res: Response) => {
     videos = []
     const answer = "success response"
-    res.status(204)//.send(answer)
-    return
+    res.sendStatus(204)
+    res.send(answer)
+
 })
 app.post('/hometask_01/api/videos', (req: Request, res: Response) => {
     const title : string = req.body.title
