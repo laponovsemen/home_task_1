@@ -1,10 +1,11 @@
+
+
 import express, {Request, Response} from 'express'
 // http
 // req, res
 // get | post | put | delete | patch
 
-let videos = [{id: 1, title: "kamasutra"},
-    {id: 2, title: "heroku"}]
+let videos: Array<VideoType> = []
 let products = [{title: "pomidory"},
     {title: "ogurtsy"},
     {title: "ananus"},
@@ -39,11 +40,20 @@ app.get('/products/:productTitle', (req: Request, res: Response) => {
 
 })
 
-app.post('/', (req: Request, res: Response) => {
-    const title = req.body.title
-    const newVideo = {
-        id: videos.length + 1,
-        title: title
+
+app.delete("/testing/all-data", (req: Request, res: Response) => {
+    videos = []
+    res.send(204)
+    return
+})
+app.post('/hometask_01/api/videos', (req: Request, res: Response) => {
+    const title : string = req.body.title
+    const author : string = req.body.author
+    const availableResolutions = req.body.availableResolutions
+    const newVideo: VideoType = {
+        "title": title,
+        "author": author,
+        "availableResolutions" : availableResolutions
     }
     videos.push(newVideo)
     res.send(newVideo)
