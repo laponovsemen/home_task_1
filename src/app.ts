@@ -32,3 +32,5 @@ app.post('/hometask_01/api/videos', (req: Request, res: Response) => {
     videos.push(newVideo)
     res.send(newVideo)
 })
+
+export default app

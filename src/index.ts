@@ -1,4 +1,4 @@
-import {app} from "./app";
+import app from "./app";
 
 const port = 3001
 
@@ -9,3 +9,5 @@ const startApp = () => {
 }
 
 startApp()
+
+export default app
