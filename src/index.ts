@@ -1,6 +1,13 @@
-import app from "./app";
+import {router} from "./app";
+import express from "express";
 
+export const app = express()
 const port = 3001
+
+
+app.use(express.json())
+
+app.use('/hometask_01', router)
 
 const startApp = () => {
     app.listen(port, () => {
