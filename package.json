@@ -6,6 +6,7 @@
   "author": "Laponov Semen <johndoe@example.com>",
   "license": "MIT",
   "scripts": {
+    "start": "nodemon src/index.ts",
     "dev": "yarn nodemon --inspect dist/index.js",
     "watch": "tsc -w"
   },
