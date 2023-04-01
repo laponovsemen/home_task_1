@@ -1,4 +1,4 @@
-import express, {Request, Response, Router} from 'express'
+import {Request, Response, Router} from 'express'
 import {app} from "./index"
 // http
 // req, res
@@ -33,16 +33,18 @@ testingRouter.delete("/testing/all-data", (req: Request, res: Response) => {
 
 })
 videosRouter.post('/', (req: Request, res: Response) => {
-    const title : string = req.body.title
-    const author : string = req.body.author
-    const availableResolutions = req.body.availableResolutions
-    const newVideo: VideoType = {
-        "title": title,
-        "author": author,
-        "availableResolutions" : availableResolutions
+    let idValue: number;
+    idValue = videos.length;
+    const newlyCreatedVideo : VideoType = {
+        id : idValue,
+        title  : req.body.title,
+        author : req.body.author,
+        availableResolutions : req.body.availableResolutions
     }
-    videos.push(newVideo)
-    res.send(newVideo)
+    videos.push(newlyCreatedVideo)
+
+
+
 })
 videosRouter.get('/', (req: Request, res: Response) => {
     res.status(204).send(videos)
@@ -79,6 +81,7 @@ videosRouter.put('/:id', (req: Request, res: Response) => {
                 "minAgeRestriction": req.body.minAgeRestriction,
                 "publicationDate": req.body.publicationDate
             }
+            videos[i] = updatedVideo
             res.sendStatus(204)
 
             return
