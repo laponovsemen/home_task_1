@@ -6,7 +6,7 @@ const port = 3001
 
 
 app.use(express.json())
-app.use("", checkRouter)
+app.use("/", checkRouter)
 app.use('/ht_01/api', testingRouter)
 app.use('/hometask_01/api/videos', videosRouter)
 const startApp = () => {
