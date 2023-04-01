@@ -28,7 +28,8 @@ checkRouter.get('', (req: Request, res: Response) => {
 testingRouter.delete("/testing/all-data", (req: Request, res: Response) => {
     videos.splice(0, videos.length - 1)
     const answer = "success response"
-    res.sendStatus(204)
+    res.send(204)
+    return
 
 
 })
