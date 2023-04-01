@@ -1,4 +1,4 @@
-type ResolutionsType =  "P144" | "P240"| "P360"| "P480" | "P720"| "P1080"| "P1440"| "P2160" ;
+type ResolutionsType =  ["P144"] | ["P240"] | ["P360"] | ["P480"] | ["P720"] | ["P1080"] | ["P1440"] | ["P2160"] ;
 
 type VideoType = {
     "id"? : number,
@@ -6,7 +6,7 @@ type VideoType = {
     "author": string,
     "canBeDownloaded"?: boolean , //By default - false
 
-    "minAgeRestriction"?: number, //maximum: 18 minimum: 1 default: null nullable: true null - no restriction
+    "minAgeRestriction"?: number | null, //maximum: 18 minimum: 1 default: null nullable: true null - no restriction
     "createdAt"?:	string,
     "publicationDate"?:	string, //By default - +1 day from CreatedAt
     "availableResolutions": ResolutionsType
