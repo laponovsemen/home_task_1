@@ -22,7 +22,7 @@ videos.push({
 export const checkRouter = Router({})
 export const testingRouter = Router({})
 export const videosRouter = Router({})
-checkRouter.get('/hello-world', (req: Request, res: Response) => {
+checkRouter.get('/hello', (req: Request, res: Response) => {
     res.json({"key" : 'hello from videos api'})
 })
 testingRouter.delete("/testing/all-data", (req: Request, res: Response) => {
