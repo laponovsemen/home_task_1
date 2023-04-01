@@ -22,7 +22,7 @@ videos.push({
 export const checkRouter = Router({})
 export const testingRouter = Router({})
 export const videosRouter = Router({})
-checkRouter.get('/hello', (req: Request, res: Response) => {
+checkRouter.get('', (req: Request, res: Response) => {
     res.json({"key" : 'hello from videos api'})
 })
 testingRouter.delete("/testing/all-data", (req: Request, res: Response) => {
@@ -32,7 +32,7 @@ testingRouter.delete("/testing/all-data", (req: Request, res: Response) => {
 
 
 })
-videosRouter.post('', (req: Request, res: Response) => {
+videosRouter.post('/', (req: Request, res: Response) => {
     const title : string = req.body.title
     const author : string = req.body.author
     const availableResolutions = req.body.availableResolutions
@@ -44,7 +44,7 @@ videosRouter.post('', (req: Request, res: Response) => {
     videos.push(newVideo)
     res.send(newVideo)
 })
-videosRouter.get('', (req: Request, res: Response) => {
+videosRouter.get('/', (req: Request, res: Response) => {
     res.status(204).send(videos)
 })
 videosRouter.get('/:id', (req: Request, res: Response) => {
