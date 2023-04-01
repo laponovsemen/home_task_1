@@ -21,6 +21,7 @@ type CreateVideoInputModelType = {
 }
 
 type UpdateVideoInputModelType = {
+
     title : string, // maxLength: 40
     author:	string, //maxLength: 20
     availableResolutions: string, //nullable: true    At least one resolution should be added

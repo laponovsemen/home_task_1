@@ -48,6 +48,10 @@ videosRouter.get('/', (req: Request, res: Response) => {
     res.status(204).send(videos)
 })
 videosRouter.get('/:id', (req: Request, res: Response) => {
+    if (req.params.id === undefined){
+        res.sendStatus(404)
+        return
+    }
     let videoId : number = +req.params.id
     for(let i = 0; i < videos.length; i++){
         if (videos[i].id === videoId){
