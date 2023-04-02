@@ -1,5 +1,7 @@
 import {Request, Response, Router} from 'express'
 import {app} from "./index"
+import {constants} from "http2";
+
 // http
 // req, res
 // get | post | put | delete | patch
@@ -24,11 +26,11 @@ export const testingRouter = Router({})
 export const videosRouter = Router({})
 checkRouter.get('', (req: Request, res: Response) => {
     res.json({"key" : 'hello from videos api'})
+    res.sendStatus(200)
 })
 testingRouter.delete("/testing/all-data", (req: Request, res: Response) => {
     videos.splice(0, videos.length - 1)
-    const answer = "success response"
-    res.send(204)
+    res.sendStatus(204)
     return
 
 
