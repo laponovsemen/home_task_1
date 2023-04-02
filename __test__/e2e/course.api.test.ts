@@ -12,14 +12,7 @@ describe("checking for base url", () => {
     })
 })
 
-describe("checking for deleting the DB", () => {
-    it("should return status code 204", async () => {
 
-        await request(app)
-            .delete("/testing/all-data")
-            .expect(204)
-    })
-})
 
 describe("checking for GET request in Videos API // RETURN ALL VIDEOS", () => {
     beforeAll(async () => {
@@ -34,16 +27,25 @@ describe("checking for GET request in Videos API // RETURN ALL VIDEOS", () => {
     })
     it("should return status code 204 and array of videos", async () => {
 
-        await request(app)
+       const blogs = await request(app)
             .get("/videos")
-            .expect(204, [{
-                "title": "string",
-                "author": "string",
-                "availableResolutions": [
-                    "P144"
-                ]
-            }])
+            .expect(200)
+        expect(blogs.body).toStrictEqual( [{
+            "id" : 1,
+            "title": "string",
+            "author": "string",
+            "availableResolutions": [
+                "P144"
+            ]
+        }])
+    })
+})
 
+describe("checking for deleting the DB", () => {
+    it("should return status code 204", async () => {
 
+        await request(app)
+            .delete("/testing/all-data")
+            .expect(204)
     })
 })

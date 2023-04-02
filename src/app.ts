@@ -30,19 +30,19 @@ checkRouter.get('', (req: Request, res: Response) => {
     res.sendStatus(200)
 })
 testingRouter.delete("/testing/all-data", (req: Request, res: Response) => {
-    videos.splice(0, videos.length - 1)
+    videos = []
     res.sendStatus(204)
     return
 
 
 })
 videosRouter.get('', (req: Request, res: Response) => {
-    res.status(204).json(videos)
+    res.send(videos)
 })
 videosRouter.post('', (req: Request, res: Response) => {
-    const videoId = videos.length
+    const videoId = videos.length + 1
     const newlyCreatedVideo : VideoType = {
-
+        id: videoId,
         title  : req.body.title,
         author : req.body.author,
         availableResolutions : req.body.availableResolutions
