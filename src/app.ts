@@ -36,23 +36,24 @@ testingRouter.delete("/testing/all-data", (req: Request, res: Response) => {
 
 
 })
-videosRouter.post('/', (req: Request, res: Response) => {
-    let idValue: number;
-    idValue = videos.length;
+videosRouter.get('', (req: Request, res: Response) => {
+    res.status(204).json(videos)
+})
+videosRouter.post('', (req: Request, res: Response) => {
+    const videoId = videos.length
     const newlyCreatedVideo : VideoType = {
-        id : idValue,
+
         title  : req.body.title,
         author : req.body.author,
         availableResolutions : req.body.availableResolutions
     }
     videos.push(newlyCreatedVideo)
+    res.status(201).send(newlyCreatedVideo)
 
 
 
 })
-videosRouter.get('/', (req: Request, res: Response) => {
-    res.status(204).send(videos)
-})
+
 videosRouter.get('/:id', (req: Request, res: Response) => {
     if (req.params.id === undefined){
         res.sendStatus(404)
