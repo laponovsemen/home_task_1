@@ -15,6 +15,15 @@ describe("checking for deleting the DB", () => {
     it("should return status code 204", async () => {
 
         await request(app)
+            .delete("/testing/all-data")
+            .expect(204)
+    })
+})
+
+describe("checking for GET request in Videos API", () => {
+    it("should return status code 204", async () => {
+
+        await request(app)
             .delete("/ht_01/api/testing/all-data")
             .expect(204)
     })
