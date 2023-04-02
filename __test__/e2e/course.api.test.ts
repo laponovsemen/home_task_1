@@ -12,7 +12,15 @@ describe("checking for base url", () => {
     })
 })
 
+describe("checking for deleting the DB", () => {
+    it("should return status code 204", async () => {
 
+        await request(app)
+            .delete("/testing/all-data")
+            .expect(204)
+
+    })
+})
 
 describe("checking for GET request in Videos API // RETURN ALL VIDEOS", () => {
     beforeAll(async () => {
@@ -41,11 +49,3 @@ describe("checking for GET request in Videos API // RETURN ALL VIDEOS", () => {
     })
 })
 
-describe("checking for deleting the DB", () => {
-    it("should return status code 204", async () => {
-
-        await request(app)
-            .delete("/testing/all-data")
-            .expect(204)
-    })
-})
