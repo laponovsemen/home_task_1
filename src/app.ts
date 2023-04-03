@@ -8,18 +8,7 @@ import {constants} from "http2";
 
 
 let videos: Array<VideoType> = []
-videos.push({
-    "id": 0,
-    "title": "string",
-    "author": "string",
-    "canBeDownloaded": true,
-    "minAgeRestriction": null,
-    "createdAt": "2023-04-01T07:20:22.049Z",
-    "publicationDate": "2023-04-01T07:20:22.049Z",
-    "availableResolutions": [
-        "P144"
-    ]
-})
+
 
 // for read "body"
 export const checkRouter = Router({})
@@ -40,16 +29,26 @@ videosRouter.get('', (req: Request, res: Response) => {
     res.send(videos)
 })
 videosRouter.post('', (req: Request, res: Response) => {
-    const videoId = typeof +req.params.id == "number"? +req.params.id : videos.length + 1
-    const newlyCreatedVideo : VideoType = {
-        id: videoId,
-        title  : req.body.title,
-        author : req.body.author,
-        availableResolutions : req.body.availableResolutions,
+    const resultOfValidation = CreateVideoInputModelValidator(req.body)
+    if(!resultOfValidation.result){
+        res.status(400).send(resultOfValidation.errors)
+    } else {
+        const videosId = videos.length + 1
+        let date = new Date()
+        const newVideo = {
+            "id" : videosId,
+            "title": req.body.title,
+            "author": req.body.author,
+            "canBeDownloaded": req.body.canBeDownloaded ==="undefined" ? false : req.body.canBeDownloaded, //By default - false
 
+            "minAgeRestriction": req.body.minAgeRestriction ==="undefined" ? null : req.body.minAgeRestriction, //maximum: 18 minimum: 1 default: null nullable: true null - no restriction
+            "createdAt":	date.toISOString(),
+            "publicationDate":	addDays(date, 1).toISOString(), //By default - +1 day from CreatedAt
+            "availableResolutions": req.body.availableResolutions ==="undefined" ? null : req.body.availableResolutions
+        }
+        videos.push(newVideo)
+        res.status(201).send(newVideo)
     }
-    videos.push(newlyCreatedVideo)
-    res.status(201).json(newlyCreatedVideo)
 
 
 
@@ -73,30 +72,7 @@ videosRouter.get('/:id', (req: Request, res: Response) => {
     return
 })
 videosRouter.put('/:id', (req: Request, res: Response) => {
-    if (req.params.id === undefined){
-        res.sendStatus(404)
-        return
-    }
-    let videoId : number = +req.params.id
 
-    for(let i = 0; i < videos.length; i++){
-        if (videos[i].id === videoId){
-            const updatedVideo : VideoType = {
-                "title": req.body.title,
-                "author": req.body.author,
-                "availableResolutions": req.body.availableResolutions,
-                "canBeDownloaded": req.body.canBeDownloaded,
-                "minAgeRestriction": req.body.minAgeRestriction,
-                "publicationDate": req.body.publicationDate
-            }
-            videos[i] = updatedVideo
-            res.sendStatus(204)
-
-            return
-        }
-
-    }
-    res.sendStatus(404)
 })// not done yet
 videosRouter.delete('/:id', (req: Request, res: Response) => {
     if (req.params.id === undefined){
