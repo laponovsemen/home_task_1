@@ -40,7 +40,7 @@ videosRouter.post('', (req: Request, res: Response) => {
             "id" : videosId,
             "title": req.body.title,
             "author": req.body.author,
-            "canBeDownloaded": true, //By default - false
+            "canBeDownloaded": false, //By default - false
             "minAgeRestriction": null, //maximum: 18 minimum: 1 default: null nullable: true null - no restriction
             "createdAt":	date.toISOString(),
             "publicationDate":	addDays(date, 1).toISOString(), //By default - +1 day from CreatedAt

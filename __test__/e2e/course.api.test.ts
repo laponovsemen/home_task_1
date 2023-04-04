@@ -179,6 +179,18 @@ describe("checking for POST request in Videos API // RETURN POSTED VIDEOS", () =
             {"field": "availableResolutions","message": "wrong values of resolutions given by creating new video"}])
 
     })*/
+    it("should return status code 400 and array of errors// NUMBER 2 All Data is string but to big in length", async () => {
+        await request(app).delete("/testing/all-data")
+        const result = await request(app)
+            .post("/videos")
+            .send({"title":null,
+                "author":"valid author",
+                "availableResolutions":["P144","P240","P720"]})
+            .expect(400)
+        expect(result.body).toEqual({ errorsMessages: [{ message: "title", field: "title" }] })
+
+    })
+
 })
 
 describe("checking for GET request by ID in Videos API // RETURN VIDEO BY ID", () => {

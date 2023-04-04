@@ -11,9 +11,12 @@ export function CreateVideoInputModelValidator(Object : any){
 
 
     //checking for correct "title" property  of Object
-    if(typeof Object.title === "undefined"  ||  !Object.title || typeof Object.title !== "string" ||  Object.title.length > 40){
+    if(typeof Object.title === "undefined"  || Object.title === null ||  !Object.title || typeof Object.title !== "string" ||  Object.title.length > 40){
         if(!Object.title || typeof Object.title === "undefined"){
             APIErrorResult.push( { message : "no title in object for CreateVideoInputModel" , field : "title"})
+        }
+        if(Object.title === null){
+            APIErrorResult.push( { message : "null as title param" , field : "title"})
         }
         if(typeof Object.title !== "string"){
             APIErrorResult.push({ message : "non-string title in object for CreateVideoInputModel" , field : "title"})
