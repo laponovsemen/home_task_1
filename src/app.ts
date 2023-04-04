@@ -30,9 +30,7 @@ videosRouter.get('', (req: Request, res: Response) => {
     res.status(200).send(videos)
 })
 videosRouter.post('', (req: Request, res: Response) => {
-    console.log(req.body)
-        const resultOfValidation = CreateVideoInputModelValidator(req.body)
-
+    const resultOfValidation = CreateVideoInputModelValidator(req.body)
     if(!resultOfValidation.result){
         res.status(400).send(resultOfValidation.errors)
     } else {
@@ -74,8 +72,42 @@ videosRouter.get('/:id', (req: Request, res: Response) => {
     return
 })
 videosRouter.put('/:id', (req: Request, res: Response) => {
+    console.log(req.body)
+    const videoIdToUpdate = +req.params.id //id of video in array "videos
+    let flag = false
+    let index = 0
+    for(let i = 0; i < videos.length; i++){ // checking for id in video array
+        if(videoIdToUpdate === videos[i].id){
+            flag = true
+            index = i
+            break;
+        }
+    }
+    if(!flag){
+        res.sendStatus(404) // send 404 code if the video not found in array
+    }else{
+        const resultOfValidation = {result: true, errors: null}//UpdateVideoInputModelValidator(req.body) //if id found check for correct data
+        if(!resultOfValidation.result){
+            res.status(400).send(resultOfValidation.errors)
+        } else {
+            const updatedVideo : VideoType= {
+                "id" : videoIdToUpdate,
+                "title": req.body.title,
+                "author": req.body.author,
+                "canBeDownloaded": typeof req.body.canBeDownloaded === "undefined" ? videos[index].canBeDownloaded : req.body.canBeDownloaded, //By default - false
+                "minAgeRestriction":typeof req.body.minAgeRestriction === "undefined" ? videos[index].minAgeRestriction : req.body.minAgeRestriction, //maximum: 18 minimum: 1 default: null nullable: true null - no restriction
+                "createdAt":	videos[index].createdAt,
+                "publicationDate":	typeof req.body.publicationDate === "undefined" ? videos[index].publicationDate: typeof req.body.publicationDate, //By default - +1 day from CreatedAt
+                "availableResolutions": typeof req.body.availableResolutions ==="undefined" ? videos[index].availableResolutions : req.body.availableResolutions
+            }
+            console.log(updatedVideo)
+            videos[index] = updatedVideo
+            res.status(204).send(updatedVideo)
+        }
+    }
 
-})// not done yet
+
+})
 videosRouter.delete('/:id', (req: Request, res: Response) => {
     if (req.params.id === undefined){
         res.sendStatus(404)
@@ -85,10 +117,10 @@ videosRouter.delete('/:id', (req: Request, res: Response) => {
     for(let i = 0; i < videos.length; i++){
         if (videos[i].id === videoId){
             videos.splice(i, 1)
-            res.status(204)
+            res.sendStatus(204)
 
             return
         }
     }
-    res.status(404)
+    res.sendStatus(404)
 })

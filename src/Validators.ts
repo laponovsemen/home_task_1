@@ -1,4 +1,4 @@
-import {APIErrorResultType, Resolutions, CreateVideoInputModelType} from "./appTypes";
+import {APIErrorResultType, Resolutions, CreateVideoInputModelType, UpdateVideoInputModelType} from "./appTypes";
 
 export const addDays = (date: Date, days: number): Date => {
     let result = new Date(date);
@@ -8,9 +8,7 @@ export const addDays = (date: Date, days: number): Date => {
 
 export function CreateVideoInputModelValidator(Object : any){
     let APIErrorResult : APIErrorResultType = []
-    if(!Object){
-        return  {result : false, errors : { message : "No Object sent to server" , field : "Input"}}
-    }
+
 
     //checking for correct "title" property  of Object
     if(typeof Object.title === "undefined"  ||  !Object.title || typeof Object.title !== "string" ||  Object.title.length > 40){
@@ -60,9 +58,6 @@ export function CreateVideoInputModelValidator(Object : any){
     }
 }
 
-
-
-
 export function UpdateVideoInputModelValidator(Object : any){
     let APIErrorResult : APIErrorResultType = []
     //checking for correct "title" property  of Object
@@ -104,18 +99,18 @@ export function UpdateVideoInputModelValidator(Object : any){
         APIErrorResult.push({ message : "wrong type of canBeDownloaded param given by updating new video" , field : "canBeDownloaded"})
     }
     // checking for minAgeRestriction
-    if(typeof Object.minAgeRestriction !== "undefined" && typeof Object.minAgeRestriction !== "number" || !(Object.minAgeRestriction > 1 && Object.minAgeRestriction < 18)){
+    if(typeof Object.minAgeRestriction !== "undefined" && typeof Object.minAgeRestriction !== "number" || Object.minAgeRestriction < 1 || Object.minAgeRestriction > 18){
         if(typeof Object.minAgeRestriction !== "undefined" && typeof Object.minAgeRestriction !== "number"){
             APIErrorResult.push({ message : "wrong type of minAgeRestriction param given by updating new video" , field : "minAgeRestriction"})
         }
-        if(!(Object.minAgeRestriction > 1 && Object.minAgeRestriction < 18)){
+        if(Object.minAgeRestriction < 1 || Object.minAgeRestriction > 18){
             APIErrorResult.push({ message : "wrong age of restriction" , field : "minAgeRestriction"})
         }
     }
 
     //checking for correct date
     const RegExpDate = new RegExp(/^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)((-(\\d{2}):(\\d{2})|Z)?)$/g);
-    if(Object.publicationDate.match(RegExpDate) === "null"){
+    if(Object.publicationDate.match(RegExpDate) === null){
         APIErrorResult.push({ message : "wrong date to update" , field : "publicationDate"})
     }
 

@@ -24,7 +24,7 @@ export type UpdateVideoInputModelType = {
     author:	string, //maxLength: 20
     availableResolutions: string, //nullable: true    At least one resolution should be added
     canBeDownloaded: boolean ,
-    minAgeRestriction: number,
+    minAgeRestriction: Array<string> | null
     publicationDate: string
 }
 export type h1Type = {

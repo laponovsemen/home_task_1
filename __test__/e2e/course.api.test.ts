@@ -2,6 +2,7 @@
 import request from 'supertest'
 import {app} from "../../src";
 import {addDays} from "../../src/Validators";
+import exp = require("constants");
 
 describe("checking for BASE url", () => {
     it("should return {\"key\" : 'hello from videos api'} and status code 200", async () => {
@@ -220,4 +221,66 @@ describe("checking for GET request by ID in Videos API // RETURN VIDEO BY ID", (
 
     })
 })
+describe("checking for PUT request by ID in Videos API // RETURN STATUS CODE 204 / 400 / 404", () => {
+    beforeAll(async () => {
+        await request(app).delete("/testing/all-data")
 
+    })
+    it("should return status code 204 //WHEN VIDEO UPDATED", async () => {
+        await request(app).delete("/testing/all-data")
+        const postedVideo = await request(app).post("/videos").send({
+            "title" :"GachiMuchi",
+            "author": "Van Darkholm",
+            "availableResolutions": ["P240", "P360", "P480", "P720", "P1080", "P1440", "P2160"]
+        })
+        const postedVideoID = postedVideo.body.id
+        const updateVideo = await request(app).put(`/videos/${postedVideoID}`).send({
+            "title" :"Billy Herington",
+            "author": "Billy Herington by himself",
+            "canBeDownloaded" : true,
+            "minAgeRestriction" : 18,
+            "availableResolutions": ["P144"],
+            "publicationDate": new Date().toISOString()
+
+        }).expect(204)
+        expect(updateVideo.body).toEqual({})
+    })
+
+})
+describe("checking for DELETE request by ID in Videos API // RETURN VIDEO BY ID", () => {
+    beforeAll(async () => {
+        await request(app).delete("/testing/all-data")
+
+    })
+    it("should return status code 204 when video found and 404 vice versa", async () => {
+        const newReq = await request(app).post("/videos").send({
+            "title" : "title",
+            "author":"author",
+            "availableResolutions" : null
+        })
+        const newId = newReq.body.id
+        const blogs = await request(app)
+            .delete(`/videos/${newId}`)
+            .expect(204)
+        await request(app)
+            .delete(`/videos/${newId + 100}`)
+            .expect(404)
+    })
+    it("should return empty array of videos when one video created and then deleted by id", async () => {
+        await request(app).delete("/testing/all-data")
+        const newReq = await request(app).post("/videos").send({
+            "title" : "title",
+            "author":"author",
+            "availableResolutions" : null
+        })
+        const newId = newReq.body.id
+        const blogs = await request(app)
+            .delete(`/videos/${newId}`)
+            .expect(204)
+        const deletedVideos = await request(app)
+            .get('/videos')
+            .expect(200 )
+        expect(deletedVideos.body).toEqual([])
+    })
+
+})
