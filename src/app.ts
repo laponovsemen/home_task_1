@@ -86,7 +86,7 @@ videosRouter.put('/:id', (req: Request, res: Response) => {
     if(!flag){
         res.sendStatus(404) // send 404 code if the video not found in array
     }else{
-        const resultOfValidation = {result: true, errors: null}//UpdateVideoInputModelValidator(req.body) //if id found check for correct data
+        const resultOfValidation = UpdateVideoInputModelValidator(req.body) //if id found check for correct data
         if(!resultOfValidation.result){
             res.status(400).send(resultOfValidation.errors)
         } else {
