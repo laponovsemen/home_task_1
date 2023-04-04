@@ -98,7 +98,7 @@ export function UpdateVideoInputModelValidator(Object : any){
         }
     }
     // checking if can be downloaded
-    if(typeof Object.canBeDownloaded !== "undefined" && typeof Object.canBeDownloaded !== "boolean"){
+    if(typeof Object.canBeDownloaded !== "undefined" && typeof Object.canBeDownloaded !== "boolean" || typeof Object.canBeDownloaded === "string"){
         APIErrorResult.push({ message : "wrong type of canBeDownloaded param given by updating new video" , field : "canBeDownloaded"})
     }
     // checking for minAgeRestriction
