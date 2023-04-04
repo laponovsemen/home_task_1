@@ -38,7 +38,7 @@ videosRouter.get('', (req: Request, res: Response) => {
 videosRouter.post('', (req: Request, res: Response) => {
     const resultOfValidation = CreateVideoInputModelValidator(req.body)
     if (!resultOfValidation.result) {
-        res.status(400).send(resultOfValidation.errors)
+        res.status(400).send({errorsMessages : resultOfValidation.errors})
     } else {
         const videosId = videos.length + 1
         let date = new Date()
@@ -93,7 +93,7 @@ videosRouter.put('/:id', (req: Request, res: Response) => {
     } else {
         const resultOfValidation = UpdateVideoInputModelValidator(req.body) //if id found check for correct data
         if (!resultOfValidation.result) {
-            res.status(400).send(resultOfValidation.errors)
+            res.status(400).send({errorsMessages : resultOfValidation.errors})
         } else {
             const updatedVideo: VideoType = {
                 "id": videoIdToUpdate,
