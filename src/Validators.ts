@@ -137,7 +137,7 @@ export function UpdateVideoInputModelValidator(Object: any) {
         APIErrorResult.push({message: "publicationDate is required field", field: "publicationDate"})
     } else if (typeof Object.publicationDate !== "string") {
         APIErrorResult.push({message: "publicationDate is not a string", field: "publicationDate"})
-    } else if (!RegExpDate.test(Object.publicationDate)) {
+    } else if (RegExpDate.test(Object.publicationDate) === null) {
         APIErrorResult.push({message: "wrong date to update", field: "publicationDate"})
     }
 
