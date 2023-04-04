@@ -1,6 +1,5 @@
-const Resolutions : Array<string> =  ["P144", "P240", "P360", "P480", "P720", "P1080", "P1440", "P2160"];
-
-type VideoType = {
+export const Resolutions : Array<string> =  ["P144", "P240", "P360", "P480", "P720", "P1080", "P1440", "P2160"];
+export type VideoType = {
     "id" : number,
     "title": string,
     "author": string,
@@ -12,16 +11,14 @@ type VideoType = {
     "availableResolutions": Array<string> | null
 
 }
-
-type CreateVideoInputModelType = {
+export type CreateVideoInputModelType = {
     "title" : string,  //maxLength: 40
     "author": string,  // maxLength: 20
 
     "availableResolutions"? : Array<string> | null //nullable: true At least one resolution should be added
 
 }
-
-type UpdateVideoInputModelType = {
+export type UpdateVideoInputModelType = {
 
     title : string, // maxLength: 40
     author:	string, //maxLength: 20
@@ -30,16 +27,14 @@ type UpdateVideoInputModelType = {
     minAgeRestriction: number,
     publicationDate: string
 }
-
-type h1Type = {
+export type h1Type = {
     "CreateVideoInputModel" : CreateVideoInputModelType,
     "Resolutions" : Array<string>,
     "UpdateVideoInputModel" : UpdateVideoInputModelType,
     "Video" : VideoType
 }
-
-type FieldErrorType = {
+export type FieldErrorType = {
     "message": 	string | null ,// nullable: true  Message with error explanation for certain field,
     "field" : string | null // nullable: true  What field/property of input model has error
 }
-type APIErrorResultType = FieldErrorType[] | null
+export type APIErrorResultType = FieldErrorType[] | null

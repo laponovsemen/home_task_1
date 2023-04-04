@@ -2,12 +2,12 @@ import {testingRouter, videosRouter, checkRouter} from "./app";
 import express from "express";
 
 export const app = express()
-const port = 3001
+const port = 3000
 
 
 app.use(express.json())
-app.use("/", checkRouter)
-app.use('', testingRouter)
+app.use("", checkRouter)
+app.use("", testingRouter)
 app.use('/videos', videosRouter)
 const startApp = () => {
     app.listen(port, () => {

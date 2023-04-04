@@ -1,14 +1,20 @@
-const addDays = (date: Date, days: number): Date => {
+import {APIErrorResultType, Resolutions, CreateVideoInputModelType} from "./appTypes";
+
+export const addDays = (date: Date, days: number): Date => {
     let result = new Date(date);
     result.setDate(result.getDate() + days);
     return result;
 };
 
-function CreateVideoInputModelValidator(Object : any){
+export function CreateVideoInputModelValidator(Object : any){
     let APIErrorResult : APIErrorResultType = []
+    if(!Object){
+        return  {result : false, errors : { message : "No Object sent to server" , field : "Input"}}
+    }
+
     //checking for correct "title" property  of Object
-    if(!Object.title || typeof Object.title !== "string" ||  Object.title.length > 40){
-        if(!Object.title){
+    if(typeof Object.title === "undefined"  ||  !Object.title || typeof Object.title !== "string" ||  Object.title.length > 40){
+        if(!Object.title || typeof Object.title === "undefined"){
             APIErrorResult.push( { message : "no title in object for CreateVideoInputModel" , field : "title"})
         }
         if(typeof Object.title !== "string"){
@@ -20,8 +26,9 @@ function CreateVideoInputModelValidator(Object : any){
     }
 
     //checking for correct "author" property  of Object
-    if(!Object.author || typeof Object.author !== "string" ||  Object.author.length > 20){
-        if(!Object.author){
+
+    if(typeof Object.author === "undefined"  || !Object.author || typeof Object.author !== "string" ||  Object.author.length > 20){
+        if(!Object.author || typeof Object.author === "undefined"){
             APIErrorResult.push({ message : "no 'author' in object for CreateVideoInputModel" , field : "author"})
         }
         if(typeof Object.author !== "string"){
@@ -53,7 +60,10 @@ function CreateVideoInputModelValidator(Object : any){
     }
 }
 
-function UpdateVideoInputModelValidator(Object : any){
+
+
+
+export function UpdateVideoInputModelValidator(Object : any){
     let APIErrorResult : APIErrorResultType = []
     //checking for correct "title" property  of Object
     if(!Object.title || typeof Object.title !== "string" ||  Object.title.length > 40){
