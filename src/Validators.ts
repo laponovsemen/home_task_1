@@ -112,7 +112,7 @@ export function UpdateVideoInputModelValidator(Object : any){
     }
 
     //checking for correct date
-    const RegExpDate = new RegExp(/^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)((-(\\d{2}):(\\d{2})|Z)?)$/g);
+    const RegExpDate = new RegExp(/^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)((-(\\d{2}):(\\d{2})|Z)?)$/);
     if(Object.publicationDate.match(RegExpDate) === null){
         APIErrorResult.push({ message : "wrong date to update" , field : "publicationDate"})
     }
