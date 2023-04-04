@@ -72,7 +72,7 @@ describe("checking for POST request in Videos API // RETURN POSTED VIDEOS", () =
             "createdAt" : expect.any(String),
             "publicationDate": expect.any(String),
             "minAgeRestriction": null,
-            "canBeDownloaded": true
+            "canBeDownloaded": false
         })
     })
     it("should return status code 201 and full video params excluding Date// NUMBER 2 Checking for correct id creation", async () => {
@@ -92,7 +92,7 @@ describe("checking for POST request in Videos API // RETURN POSTED VIDEOS", () =
             "createdAt" : expect.any(String),
             "publicationDate": expect.any(String),
             "minAgeRestriction": null,
-            "canBeDownloaded": true
+            "canBeDownloaded": false
         })
     })
     it("should return status code 201 and full video params excluding Date// NUMBER 3 Checking for correct id creation", async () => {
@@ -112,7 +112,7 @@ describe("checking for POST request in Videos API // RETURN POSTED VIDEOS", () =
             "createdAt" : expect.any(String),
             "publicationDate": expect.any(String),
             "minAgeRestriction": null,
-            "canBeDownloaded": true
+            "canBeDownloaded": false
         })
     })
     it("should return status code 201 and full video params excluding Date// NUMBER 4 Checking for correct id creation with any params", async () => {
@@ -132,7 +132,7 @@ describe("checking for POST request in Videos API // RETURN POSTED VIDEOS", () =
             "createdAt" : expect.any(String),
             "publicationDate": expect.any(String),
             "minAgeRestriction": null,
-            "canBeDownloaded": true
+            "canBeDownloaded": false
         })
     })
     //TESTING WITH WRONG DATA
@@ -179,7 +179,7 @@ describe("checking for POST request in Videos API // RETURN POSTED VIDEOS", () =
             {"field": "availableResolutions","message": "wrong values of resolutions given by creating new video"}])
 
     })*/
-    it("should return status code 400 and array of errors// NUMBER 2 All Data is string but to big in length", async () => {
+    it("should return status code 400 and array of errors// NUMBER 3 \"title\" : null", async () => {
         await request(app).delete("/testing/all-data")
         const result = await request(app)
             .post("/videos")
@@ -249,11 +249,10 @@ describe("checking for PUT request by ID in Videos API // RETURN STATUS CODE 204
         const updateVideo = await request(app).put(`/videos/${postedVideoID}`).send({
             "title" :"Billy Herington",
             "author": "Billy Herington by himself",
-            "canBeDownloaded" : true,
-            "minAgeRestriction" : 18,
+            "canBeDownloaded" : false,
+            "minAgeRestriction" : 16,
             "availableResolutions": ["P144"],
             "publicationDate": new Date().toISOString()
-
         }).expect(204)
         expect(updateVideo.body).toEqual({})
     })
