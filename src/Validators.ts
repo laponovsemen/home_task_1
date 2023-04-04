@@ -70,19 +70,18 @@ export function CreateVideoInputModelValidator(Object: any) {
 export function UpdateVideoInputModelValidator(Object: any) {
     let APIErrorResult: APIErrorResultType = []
     //checking for correct "title" property  of Object
-    if (!Object.title || typeof Object.title !== "string" || Object.title.length > 40) {
         if (!Object.title) {
             APIErrorResult.push({message: "no title in object for UpdateVideoInputModel", field: "title"})
         }
-        if (typeof Object.title !== "string") {
+        else if (typeof Object.title !== "string") {
             APIErrorResult.push({message: "non-string title in object for UpdateVideoInputModel", field: "title"})
         }
-        if (Object.title.length > 40) {
+        else if (Object.title.length > 40) {
             APIErrorResult.push({
                 message: "the length of string in title in object for UpdateVideoInputModel is more than 40 characters",
                 field: "title"
             })
-        }
+
     }
 
     //checking for correct "author" property  of Object
