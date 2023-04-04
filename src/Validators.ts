@@ -134,11 +134,14 @@ export function UpdateVideoInputModelValidator(Object: any) {
     //checking for correct date
     const RegExpDate = new RegExp(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/);
     if (!Object.publicationDate) {
+        console.log({1: RegExpDate.test(Object.publicationDate)})
         APIErrorResult.push({message: "publicationDate is required field", field: "publicationDate"})
     } else if (typeof Object.publicationDate !== "string") {
+        console.log({2: RegExpDate.test(Object.publicationDate)})
         APIErrorResult.push({message: "publicationDate is not a string", field: "publicationDate"})
     } else if (RegExpDate.test(Object.publicationDate) === null) {
-        APIErrorResult.push({message: "wrong date to update", field: "publicationDate"})
+        console.log({3: RegExpDate.test(Object.publicationDate)})
+        APIErrorResult.push({message: "wrong date format to update", field: "publicationDate"})
     }
 
 
