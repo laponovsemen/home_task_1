@@ -260,20 +260,25 @@ describe("checking for PUT request by ID in Videos API // RETURN STATUS CODE 204
     it("should return status code 204 //WHEN VIDEO UPDATED", async () => {
         await request(app).delete("/testing/all-data")
         const postedVideo = await request(app).post("/videos").send({
-            "title" :"GachiMuchi",
+            "title": "GachiMuchi",
             "author": "Van Darkholm",
             "availableResolutions": ["P240", "P360", "P480", "P720", "P1080", "P1440", "P2160"]
         })
         const postedVideoID = postedVideo.body.id
         const updateVideo = await request(app).put(`/videos/${postedVideoID}`).send({
-            "title" :"Billy Herington",
+            "title": "Billy Herington",
             "author": "Billy Herington",
-            "canBeDownloaded" : false,
-            "minAgeRestriction" : 16,
+            "canBeDownloaded": false,
+            "minAgeRestriction": 16,
             "availableResolutions": ["P144"],
             "publicationDate": "string"
         }).expect(400)
-        expect(updateVideo.body).toEqual({})
+        expect(updateVideo.body).toEqual({
+            "errorsMessages": [{
+                "field": "publicationDate",
+                "message": "wrong date format to update"
+            }]
+        })
     })
 
 })

@@ -100,6 +100,7 @@ export function UpdateVideoInputModelValidator(Object: any) {
         }
     }
     // checking for proper resolutions of video according to server settings
+
     if (Object.availableResolutions && typeof Object.availableResolutions === "object") {
         for (let i = 0; i < Object.availableResolutions.length; i++) {
             if (!Resolutions.includes(Object.availableResolutions[i])) {
@@ -140,8 +141,7 @@ export function UpdateVideoInputModelValidator(Object: any) {
 
         APIErrorResult.push({message: "publicationDate is not a string", field: "publicationDate"})
     } else if (!RegExpDate.test(Object.publicationDate)) {
-        console.log(RegExpDate.test(Object.publicationDate))
-        console.log(RegExpDate.test("2023-04-10T19:42:11.397Z"))
+
         APIErrorResult.push({message: "wrong date format to update", field: "publicationDate"})
     }
 
