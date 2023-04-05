@@ -2,7 +2,7 @@ import {testingRouter, videosRouter, checkRouter} from "./app";
 import express from "express";
 
 export const app = express()
-const port = 5000
+const port = 3000
 
 
 app.use(express.json())
