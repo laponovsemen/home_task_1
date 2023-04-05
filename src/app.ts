@@ -95,7 +95,7 @@ videosRouter.put('/:id', (req: Request, res: Response) => {
                 "canBeDownloaded": typeof req.body.canBeDownloaded === "undefined" ? videos[index].canBeDownloaded : req.body.canBeDownloaded, //By default - false
                 "minAgeRestriction": typeof req.body.minAgeRestriction === "undefined" ? videos[index].minAgeRestriction : req.body.minAgeRestriction, //maximum: 18 minimum: 1 default: null nullable: true null - no restriction
                 "createdAt": videos[index].createdAt,
-                "publicationDate": typeof req.body.publicationDate === "undefined" ? videos[index].publicationDate : typeof req.body.publicationDate, //By default - +1 day from CreatedAt
+                "publicationDate": typeof req.body.publicationDate === "undefined" ? videos[index].publicationDate : req.body.publicationDate, //By default - +1 day from CreatedAt
                 "availableResolutions": typeof req.body.availableResolutions === "undefined" ? videos[index].availableResolutions : req.body.availableResolutions
             }
             videos[index] = updatedVideo
