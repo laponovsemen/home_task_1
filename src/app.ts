@@ -1,14 +1,7 @@
 import {Request, Response, Router} from 'express'
-import {app} from "./index"
-import {constants} from "http2";
+
 import {CreateVideoInputModelValidator, addDays, UpdateVideoInputModelValidator} from './Validators'
-import {
-    VideoType,
-    FieldErrorType,
-    CreateVideoInputModelType,
-    UpdateVideoInputModelType,
-    APIErrorResultType
-} from './appTypes'
+import {VideoType} from './appTypes'
 // http
 // req, res
 // get | post | put | delete | patch
@@ -77,7 +70,7 @@ videosRouter.get('/:id', (req: Request, res: Response) => {
     return
 })
 videosRouter.put('/:id', (req: Request, res: Response) => {
-    console.log(req.body)
+
     const videoIdToUpdate = +req.params.id //id of video in array "videos
     let flag = false
     let index = 0
@@ -105,7 +98,6 @@ videosRouter.put('/:id', (req: Request, res: Response) => {
                 "publicationDate": typeof req.body.publicationDate === "undefined" ? videos[index].publicationDate : typeof req.body.publicationDate, //By default - +1 day from CreatedAt
                 "availableResolutions": typeof req.body.availableResolutions === "undefined" ? videos[index].availableResolutions : req.body.availableResolutions
             }
-            console.log(updatedVideo)
             videos[index] = updatedVideo
             res.status(204).send(updatedVideo)
         }

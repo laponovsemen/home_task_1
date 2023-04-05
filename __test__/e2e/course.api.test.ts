@@ -146,7 +146,7 @@ describe("checking for POST request in Videos API // RETURN POSTED VIDEOS", () =
                 "availableResolutions": null
             })
             .expect(400)
-        expect(result.body).toEqual([{"field": "title", "message": "the length of string in title in object for CreateVideoInputModel is more than 40 characters"}])
+        expect(result.body).toEqual({"errorsMessages": [{"field": "title", "message": "the length of string in title in object for CreateVideoInputModel is more than 40 characters"}]})
 
     })
     it("should return status code 400 and array of errors// NUMBER 2 All Data is string but to big in length", async () => {
@@ -159,9 +159,9 @@ describe("checking for POST request in Videos API // RETURN POSTED VIDEOS", () =
                 "availableResolutions": ["TanjaTanjaTanjaTanjaTanjaTanjaTanjaTanjaTanja"]
             })
             .expect(400)
-        expect(result.body).toEqual([{"field": "title", "message": "the length of string in title in object for CreateVideoInputModel is more than 40 characters"},
+        expect(result.body).toEqual({"errorsMessages":  [{"field": "title", "message": "the length of string in title in object for CreateVideoInputModel is more than 40 characters"},
             {"field": "author", "message": "the length of string in 'author' in object for CreateVideoInputModel is more than 20 characters"},
-            {"field": "availableResolutions","message": "wrong values of resolutions given by creating new video"}])
+            {"field": "availableResolutions","message": "wrong values of resolutions given by creating new video"}]})
 
     })
     /*it("should return status code 400 and array of errors// NUMBER 3 All Data is undefined ", async () => {
@@ -187,7 +187,7 @@ describe("checking for POST request in Videos API // RETURN POSTED VIDEOS", () =
                 "author":"valid author",
                 "availableResolutions":["P144","P240","P720"]})
             .expect(400)
-        expect(result.body).toEqual({ errorsMessages: [{ message: "title", field: "title" }] })
+        expect(result.body).toEqual({ errorsMessages: [{ message: "no title in object for CreateVideoInputModel", field: "title" }] })
 
     })
 
@@ -248,12 +248,31 @@ describe("checking for PUT request by ID in Videos API // RETURN STATUS CODE 204
         const postedVideoID = postedVideo.body.id
         const updateVideo = await request(app).put(`/videos/${postedVideoID}`).send({
             "title" :"Billy Herington",
-            "author": "Billy Herington by himself",
+            "author": "Billy Herington ",
             "canBeDownloaded" : false,
             "minAgeRestriction" : 16,
             "availableResolutions": ["P144"],
             "publicationDate": new Date().toISOString()
         }).expect(204)
+        expect(updateVideo.body).toEqual({})
+    })
+
+    it("should return status code 204 //WHEN VIDEO UPDATED", async () => {
+        await request(app).delete("/testing/all-data")
+        const postedVideo = await request(app).post("/videos").send({
+            "title" :"GachiMuchi",
+            "author": "Van Darkholm",
+            "availableResolutions": ["P240", "P360", "P480", "P720", "P1080", "P1440", "P2160"]
+        })
+        const postedVideoID = postedVideo.body.id
+        const updateVideo = await request(app).put(`/videos/${postedVideoID}`).send({
+            "title" :"Billy Herington",
+            "author": "Billy Herington",
+            "canBeDownloaded" : false,
+            "minAgeRestriction" : 16,
+            "availableResolutions": ["P144"],
+            "publicationDate": "string"
+        }).expect(400)
         expect(updateVideo.body).toEqual({})
     })
 
